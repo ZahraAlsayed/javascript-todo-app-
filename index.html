@@ -4,9 +4,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- Link to Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
+    <link rel="stylesheet" href="style.css">
+    <title>TO-DO List </title>
 </head>
 <body>
-    
+    <div class="container">
+        <h1>MY To-Do List</h1>
+        <form action="" class="input-group mb-3">
+            <input type="text" id="task" class="form-control" placeholder="Add a new task">
+            <div class="input-group-append">
+                <button id="add-task" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+        <form class="input-group mb-3">
+            <input type="text" id="search" class="form-control" placeholder="Search tasks">
+        </form>
+        <select id="filter" class="form-control">
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+        </select>
+        <div id="task-list">
+            <!-- Task list -->
+        </div>
+        <p>Total tasks: <span id="total-tasks">0</span></p>
+    </div>
+
+    <script src="index.js"></script>
 </body>
 </html>

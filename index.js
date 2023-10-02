@@ -60,12 +60,18 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function to filter tasks based on search term
     function filterTasks(searchTerm) {
         return tasks.filter(task => task.text.toLowerCase().includes(searchTerm.toLowerCase()));
+        
     }
 
     // Function to add a new task
     function addTask() {
         const taskText = taskInput.value.trim();
-        if (taskText === "") return;
+        if (!taskText) 
+        {
+            alert("Text should not be empty");
+            return;
+        }
+
 
         tasks.push({ text: taskText, completed: false });
         taskInput.value = "";

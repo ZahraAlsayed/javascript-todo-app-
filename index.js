@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const addTaskButton = document.getElementById("add-task");
     const searchInput = document.getElementById("search");
     const taskList = document.getElementById("task-list");
-    const taskCount = document.getElementById("task-count");
     const totalTasks = document.getElementById("total-tasks");
     const filterDropdown = document.getElementById("filter");
 
@@ -11,19 +10,12 @@ document.addEventListener("DOMContentLoaded", function () {
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
     // Function to render tasks
-    function renderTasks() {
+    function renderTasks(filter = "all") {
         taskList.innerHTML = "";
 
-        const selectedFilter = filterDropdown.value;
+        const filteredTasks = filter === "all" ? tasks : filterTasks(searchInput.value.trim());
 
-        tasks.forEach((task, index) => {
-            if (selectedFilter === "active" && task.completed) {
-                return; // Skip completed tasks in active filter mode
-            }
-            if (selectedFilter === "completed" && !task.completed) {
-                return; // Skip active tasks in completed filter mode
-            }
-
+        filteredTasks.forEach((task, index) => {
             const taskItem = document.createElement("div");
             taskItem.className = "task";
 
@@ -65,6 +57,11 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
 
+    // Function to filter tasks based on search term
+    function filterTasks(searchTerm) {
+        return tasks.filter(task => task.text.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+
     // Function to add a new task
     function addTask() {
         const taskText = taskInput.value.trim();
@@ -72,19 +69,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         tasks.push({ text: taskText, completed: false });
         taskInput.value = "";
-        renderTasks();
+        renderTasks(filterDropdown.value);
     }
 
     // Function to delete a task
     function deleteTask(index) {
         tasks.splice(index, 1);
-        renderTasks();
+        renderTasks(filterDropdown.value);
     }
 
     // Function to toggle task completion
     function toggleTaskComplete(index) {
         tasks[index].completed = !tasks[index].completed;
-        renderTasks();
+        renderTasks(filterDropdown.value);
     }
 
     // Function to edit a task
@@ -92,21 +89,14 @@ document.addEventListener("DOMContentLoaded", function () {
         tasks[index].text = newText;
     }
 
-    // Function to filter tasks based on search
-    function filterTasks(searchTerm) {
-        return tasks.filter(task => task.text.toLowerCase().includes(searchTerm.toLowerCase()));
-    }
-
     // Event listeners
     addTaskButton.addEventListener("click", addTask);
     searchInput.addEventListener("input", () => {
-        const searchTerm = searchInput.value.trim();
-        const filteredTasks = filterTasks(searchTerm);
-        renderTasks(filteredTasks);
+        renderTasks(filterDropdown.value);
     });
 
     filterDropdown.addEventListener("change", () => {
-        renderTasks();
+        renderTasks(filterDropdown.value);
     });
 
     // Initial render

@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const taskInput = document.getElementById("task");
+    const form= document.getElementsByName("form")
     const addTaskButton = document.getElementById("add-task");
     const searchInput = document.getElementById("search");
     const taskList = document.getElementById("task-list");
@@ -61,15 +62,17 @@ document.addEventListener("DOMContentLoaded", function () {
     function filterTasks(searchTerm) {
         return tasks.filter(task => task.text.toLowerCase().includes(searchTerm.toLowerCase()));
         
+        
     }
 
     // Function to add a new task
     function addTask() {
+        
         const taskText = taskInput.value.trim();
         if (!taskText) 
         {
             alert("Text should not be empty");
-            return;
+             form.reset()
         }
 
 
